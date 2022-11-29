@@ -105,13 +105,15 @@ app.post('/batch', express.json(), w(async (req, res) => {
   const globalParams = req.body.params ? {...req.body.params, ...baseParams} : baseParams
 
   const results = await Promise.all(requests.map(async r => {
+    const {operation, params, id} = r
+
     try {
-      const {operation, params} = r
       const rParams = {...params, ...globalParams}
       const operationResult = await cluster[operation](rParams)
 
       if (operationResult.length === 0) {
         return {
+          id,
           status: 'not-found'
         }
       }
@@ -124,12 +126,14 @@ app.post('/batch', express.json(), w(async (req, res) => {
       }
 
       return {
+        id,
         status: 'ok',
         result
       }
     } catch (error) {
       console.error(error)
       return {
+        id,
         status: 'error',
         error: error.message
       }
