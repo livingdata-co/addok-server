@@ -1,0 +1,11 @@
+{
+  "name": "addok-server",
+  "version": "0.0.0",
+  "description": "Full-featured HTTP API for addok",
+  "main": "index.js",
+  "type": "module",
+  "repository": "https://github.com/livingdata-co/addok-server",
+  "author": "Jérôme Desboeufs <jerome@livingdata.co>",
+  "license": "MIT",
+  "private": false
+}
