@@ -9,7 +9,15 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "lint": "xo"
+    "lint": "xo",
+    "start": "node server"
+  },
+  "dependencies": {
+    "addok-cluster": "^0.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "xo": "^0.53.1"
@@ -22,7 +30,8 @@
         "error",
         "never"
       ],
-      "unicorn/prevent-abbreviations": "off"
+      "unicorn/prevent-abbreviations": "off",
+      "import/no-unassigned-import": "off"
     }
   },
   "engines": {
