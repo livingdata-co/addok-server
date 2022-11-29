@@ -54,6 +54,32 @@ app.get('/search', w(async (req, res) => {
   })
 }))
 
+app.get('/reverse', w(async (req, res) => {
+  const params = {
+    lon: req.query.lon ? Number.parseFloat(req.query.lon) : undefined,
+    lat: req.query.lat ? Number.parseFloat(req.query.lat) : undefined,
+    limit: req.query.limit ? Number.parseInt(req.query.limit, 10) : 5,
+    filters: {}
+  }
+
+  for (const filter of ADDOK_FILTERS) {
+    params.filters[filter] = req.query[filter]
+  }
+
+  const results = await cluster.reverse(params)
+
+  res.send({
+    type: 'FeatureCollection',
+    version: 'draft',
+    features: results,
+    attribution: 'BAN',
+    licence: 'ETALAB-2.0',
+    filters: Object.keys(params.filters).length > 0 ? params.filters : undefined,
+    center: params.lon && params.lat ? [params.lon, params.lat] : undefined,
+    limit: params.limit
+  })
+}))
+
 app.post('/batch', express.json(), w(async (req, res) => {
   const {requests} = req.body
 
