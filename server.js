@@ -11,12 +11,12 @@ import createError from 'http-errors'
 
 import {createCluster} from 'addok-cluster'
 
+import {search} from './lib/search.js'
 import {csv} from './lib/csv.js'
 import w from './lib/w.js'
 import errorHandler from './lib/error-handler.js'
 
 const PORT = process.env.PORT || 5000
-const ADDOK_FILTERS = process.env.ADDOK_FILTERS ? process.env.ADDOK_FILTERS.split(',') : []
 
 const app = express()
 const upload = multer()
@@ -30,60 +30,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
-app.get('/search', w(async (req, res) => {
-  const params = {
-    q: req.query.q,
-    autocomplete: req.query.autocomplete !== '0',
-    lon: req.query.lon ? Number.parseFloat(req.query.lon) : undefined,
-    lat: req.query.lat ? Number.parseFloat(req.query.lat) : undefined,
-    limit: req.query.limit ? Number.parseInt(req.query.limit, 10) : 5,
-    filters: {}
-  }
-
-  for (const filter of ADDOK_FILTERS) {
-    params.filters[filter] = req.query[filter]
-  }
-
-  const results = await cluster.geocode(params)
-
-  res.send({
-    type: 'FeatureCollection',
-    version: 'draft',
-    features: results,
-    attribution: 'BAN',
-    licence: 'ETALAB-2.0',
-    query: params.q,
-    filters: Object.keys(params.filters).length > 0 ? params.filters : undefined,
-    center: params.lon && params.lat ? [params.lon, params.lat] : undefined,
-    limit: params.limit
-  })
-}))
-
-app.get('/reverse', w(async (req, res) => {
-  const params = {
-    lon: req.query.lon ? Number.parseFloat(req.query.lon) : undefined,
-    lat: req.query.lat ? Number.parseFloat(req.query.lat) : undefined,
-    limit: req.query.limit ? Number.parseInt(req.query.limit, 10) : 5,
-    filters: {}
-  }
-
-  for (const filter of ADDOK_FILTERS) {
-    params.filters[filter] = req.query[filter]
-  }
-
-  const results = await cluster.reverse(params)
-
-  res.send({
-    type: 'FeatureCollection',
-    version: 'draft',
-    features: results,
-    attribution: 'BAN',
-    licence: 'ETALAB-2.0',
-    filters: Object.keys(params.filters).length > 0 ? params.filters : undefined,
-    center: params.lon && params.lat ? [params.lon, params.lat] : undefined,
-    limit: params.limit
-  })
-}))
+app.get('/search', w(search({cluster})))
+app.get('/reverse', w(search({cluster, reverse: true})))
 
 app.post('/batch', express.json(), w(async (req, res) => {
   const {requests} = req.body
