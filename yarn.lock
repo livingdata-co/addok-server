@@ -222,10 +222,10 @@ acorn@^8.8.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
-addok-cluster@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.2.0.tgz#344efc42f7c8adf811266669d2ac2a19b4c076ee"
-  integrity sha512-9wgA6nCRcfoTKzOis6dg3opZyAOo0lY4eEz56dOmfMUkxxyWk+XfwU1e8CLibGOz1dfH2iyUGBHwM9CsmxFRTQ==
+addok-cluster@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.3.0.tgz#dd110ef224c7a2e6f8cc5749948b9facd249496c"
+  integrity sha512-rhXGd1qmTOvd5d60ltUmKWIax09IP36G5b6DJtbla10SBKOmKQIUiz0EdS5D0UXWklW/A/CSXK9J+VsbxAFiTA==
   dependencies:
     debug "^4.3.4"
     http-errors "^2.0.0"
