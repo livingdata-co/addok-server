@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "addok-cluster": "^0.3.0",
+    "addok-geocode-stream": "^0.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
