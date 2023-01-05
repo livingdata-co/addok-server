@@ -4,12 +4,14 @@ import 'dotenv/config.js'
 import process from 'node:process'
 
 import express from 'express'
+import multer from 'multer'
 import cors from 'cors'
 import morgan from 'morgan'
 import createError from 'http-errors'
 
 import {createCluster} from 'addok-cluster'
 
+import {csv} from './lib/csv.js'
 import w from './lib/w.js'
 import errorHandler from './lib/error-handler.js'
 
@@ -17,6 +19,7 @@ const PORT = process.env.PORT || 5000
 const ADDOK_FILTERS = process.env.ADDOK_FILTERS ? process.env.ADDOK_FILTERS.split(',') : []
 
 const app = express()
+const upload = multer()
 const cluster = await createCluster()
 
 if (process.env.NODE_ENV !== 'production') {
@@ -142,6 +145,9 @@ app.post('/batch', express.json(), w(async (req, res) => {
 
   res.send({results})
 }))
+
+app.post('/search/csv', upload.single('data'), w(csv({cluster})))
+app.post('/reverse/csv', upload.single('data'), w(csv({cluster, reverse: true})))
 
 app.use(errorHandler)
 
