@@ -22,6 +22,8 @@ const app = express()
 const upload = multer()
 const cluster = await createCluster()
 
+app.disable('x-powered-by')
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
