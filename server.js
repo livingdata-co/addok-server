@@ -7,11 +7,11 @@ import express from 'express'
 import multer from 'multer'
 import cors from 'cors'
 import morgan from 'morgan'
-import createError from 'http-errors'
 
 import {createCluster} from 'addok-cluster'
 
 import {search} from './lib/search.js'
+import {batch} from './lib/batch.js'
 import {csv} from './lib/csv.js'
 import w from './lib/w.js'
 import errorHandler from './lib/error-handler.js'
@@ -33,68 +33,7 @@ app.use(cors({origin: true}))
 app.get('/search', w(search({cluster})))
 app.get('/reverse', w(search({cluster, reverse: true})))
 
-app.post('/batch', express.json(), w(async (req, res) => {
-  const {requests} = req.body
-
-  if (!Array.isArray(requests)) {
-    throw createError(400, 'requests is a required param (array)')
-  }
-
-  if (requests.length > 100) {
-    throw createError(400, 'requests must not contains more than 100 items')
-  }
-
-  for (const r of requests) {
-    if (!['geocode', 'reverse'].includes(r.operation)) {
-      throw createError(400, 'operation must be one of geocode or reverse')
-    }
-
-    if (!r.params) {
-      throw createError(400, 'params is required for each requests item')
-    }
-  }
-
-  const baseParams = {limit: 2, autocomplete: false}
-  const globalParams = req.body.params ? {...req.body.params, ...baseParams} : baseParams
-
-  const results = await Promise.all(requests.map(async r => {
-    const {operation, params, id} = r
-
-    try {
-      const rParams = {...params, ...globalParams}
-      const operationResult = await cluster[operation](rParams)
-
-      if (operationResult.length === 0) {
-        return {
-          id,
-          status: 'not-found'
-        }
-      }
-
-      const result = {
-        ...operationResult[0].properties,
-        next_score: operationResult[1] ? operationResult[1].properties.score : undefined,
-        lon: operationResult[0].geometry.coordinates[0],
-        lat: operationResult[0].geometry.coordinates[1]
-      }
-
-      return {
-        id,
-        status: 'ok',
-        result
-      }
-    } catch (error) {
-      console.error(error)
-      return {
-        id,
-        status: 'error',
-        error: error.message
-      }
-    }
-  }))
-
-  res.send({results})
-}))
+app.post('/batch', express.json(), w(batch({cluster})))
 
 app.post('/search/csv', upload.single('data'), w(csv({cluster})))
 app.post('/reverse/csv', upload.single('data'), w(csv({cluster, reverse: true})))
