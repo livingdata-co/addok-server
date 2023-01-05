@@ -265,6 +265,17 @@ addok-cluster@^0.3.0:
     python-shell "^3.0.1"
     supports-color "^9.2.3"
 
+addok-cluster@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.3.1.tgz#a149cee62633182fa4e979caf13ecafd5e264252"
+  integrity sha512-wan7ZHYfbrnSxFHGkszsMiW11sutokV+jhAh9rky+eG/JDYSa7rY4G21uWpsId+TXr2jY0gP9IDLotKtLIJxrA==
+  dependencies:
+    debug "^4.3.4"
+    http-errors "^2.0.0"
+    lodash-es "^4.17.21"
+    python-shell "^3.0.1"
+    supports-color "^9.2.3"
+
 addok-geocode-stream@^0.21.0:
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/addok-geocode-stream/-/addok-geocode-stream-0.21.0.tgz#f47006221be037708eb75eaac097164066beb91d"
