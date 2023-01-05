@@ -265,10 +265,10 @@ addok-cluster@^0.3.0:
     python-shell "^3.0.1"
     supports-color "^9.2.3"
 
-addok-cluster@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.3.1.tgz#a149cee62633182fa4e979caf13ecafd5e264252"
-  integrity sha512-wan7ZHYfbrnSxFHGkszsMiW11sutokV+jhAh9rky+eG/JDYSa7rY4G21uWpsId+TXr2jY0gP9IDLotKtLIJxrA==
+addok-cluster@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.3.2.tgz#342d84249fa805ce0ad12842dc751eb171e4ced8"
+  integrity sha512-+63lMoLLhAZAhmOmT7Z3FwGQ0PEvijRIHzUNdbX/woqATqux7Z/afDNZpgg/FsoCiTRUkBCQ0VvccGmhbvBSAQ==
   dependencies:
     debug "^4.3.4"
     http-errors "^2.0.0"
