@@ -57,18 +57,18 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livingdata/tabular-data-helpers@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@livingdata/tabular-data-helpers/-/tabular-data-helpers-0.0.6.tgz#2cc56038dab5a5114ea42775ba560c816510abad"
-  integrity sha512-nqzN10i9OJm/uvelJ4KIJ+DnJll/KQyCnktSesP9F0nQDr/y3NEq/vQGUaTseS+EtIm4eWRX9gAK4k5o+cSacA==
+"@livingdata/tabular-data-helpers@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@livingdata/tabular-data-helpers/-/tabular-data-helpers-0.0.7.tgz#7c011209cc74768a41d73a0ed66a03add18e9af7"
+  integrity sha512-lXArvC3voUSD0csBvRIDJQ6mylyHjqx43U6hQQAbCoMo0HklRZ80YVo7rnY/zYCs3WHqJwCldqt7lZ6iUVFKdA==
   dependencies:
     buffer "^6.0.3"
-    chardet "^1.5.0"
+    chardet "^1.5.1"
     events "^3.3.0"
     iconv-lite "^0.6.3"
     papaparse "^5.3.2"
     pumpify "^2.0.1"
-    readable-stream "^4.2.0"
+    readable-stream "^4.3.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -548,10 +548,10 @@ chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chardet@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/chardet/-/chardet-1.5.0.tgz#c35b3e9a5994f7574688d1607a2ea9c723ebca95"
-  integrity sha512-Nj3VehbbFs/1ZnJJJaL3ztEf3Nu5Fs6YV/NBs6lyz/iDDHUU+X9QNk5QgPy1/5Rjtb/cGVf+NyazP7kVEJqKRg==
+chardet@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/chardet/-/chardet-1.5.1.tgz#2a15770a46ce15e25a99f2741c949f43f9925dd5"
+  integrity sha512-0XMOtA52igKDOIfvJZJ6v0+J9yMF3IuYyEa5oFUxBXA01G6mwCNKpul3bgbFf7lmZuqwN/oyg/zQ1cGS7NyJkQ==
 
 ci-info@^3.4.0:
   version "3.7.0"
@@ -2884,7 +2884,7 @@ readable-stream@^3.1.1:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
-readable-stream@^4.2.0:
+readable-stream@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.3.0.tgz#0914d0c72db03b316c9733bb3461d64a3cc50cba"
   integrity sha512-MuEnA0lbSi7JS8XM+WNJlWZkHAAdm7gETHdFK//Q/mChGyj2akEFtdLZh32jSdkWGbRwCW9pn6g3LWDdDeZnBQ==
