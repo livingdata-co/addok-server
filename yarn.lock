@@ -254,17 +254,6 @@ acorn@^8.8.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
-addok-cluster@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.3.0.tgz#dd110ef224c7a2e6f8cc5749948b9facd249496c"
-  integrity sha512-rhXGd1qmTOvd5d60ltUmKWIax09IP36G5b6DJtbla10SBKOmKQIUiz0EdS5D0UXWklW/A/CSXK9J+VsbxAFiTA==
-  dependencies:
-    debug "^4.3.4"
-    http-errors "^2.0.0"
-    lodash-es "^4.17.21"
-    python-shell "^3.0.1"
-    supports-color "^9.2.3"
-
 addok-cluster@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.0.tgz#1a9fe46f97319cec6764ed6492ea4400419cdf35"
@@ -276,12 +265,23 @@ addok-cluster@^0.4.0:
     python-shell "^3.0.1"
     supports-color "^9.2.3"
 
-addok-geocode-stream@^0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/addok-geocode-stream/-/addok-geocode-stream-0.21.0.tgz#f47006221be037708eb75eaac097164066beb91d"
-  integrity sha512-srb+KeyYDzPTFEhr2Z+o6Vao4TZeGo+P4oazevUwWRlQoky/MjCoAiL47JVD7hSe1/Qc8iKZbgiRBpOaltfFyg==
+addok-cluster@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.1.tgz#cd970d96b8c3569d4298684f487ce91012061734"
+  integrity sha512-9Fg97K12u9p7h4LwcXrs9neJOCY0RCg8pzfbb6Vaz+lzItUpgwgdvdHIIHYbZq7cqwelS5TXoryS8qz39J0sbA==
   dependencies:
-    addok-cluster "^0.3.0"
+    debug "^4.3.4"
+    http-errors "^2.0.0"
+    lodash-es "^4.17.21"
+    python-shell "^3.0.1"
+    supports-color "^9.3.1"
+
+addok-geocode-stream@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/addok-geocode-stream/-/addok-geocode-stream-0.22.0.tgz#06bf2300ca9550e2204308690ea0284f0408e1d0"
+  integrity sha512-+3y5FD0eHTvVotgMLsNBc6btxI4isodxxQdXHG2LQmOz1TKTxw/tg09hTJp4ApT5+AVcC1SZ6bgdSI4wJvnCqA==
+  dependencies:
+    addok-cluster "^0.4.1"
     csv-parser "^3.0.0"
     csv-write-stream "^2.0.0"
     form-data "^4.0.0"
@@ -3257,6 +3257,11 @@ supports-color@^9.2.3:
   version "9.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-9.2.3.tgz#a6e2c97fc20c80abecd69e50aebe4783ff77d45a"
   integrity sha512-aszYUX/DVK/ed5rFLb/dDinVJrQjG/vmU433wtqVSD800rYsJNWxh2R3USV90aLSU+UsyQkbNeffVLzc6B6foA==
+
+supports-color@^9.3.1:
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-9.3.1.tgz#34e4ad3c71c9a39dae3254ecc46c9b74e89e15a6"
+  integrity sha512-knBY82pjmnIzK3NifMo3RxEIRD9E0kIzV4BKcyTZ9+9kWgLMxd4PrsTSMoFQUabgRBbF8KOLRDCyKgNV+iK44Q==
 
 supports-hyperlinks@^2.0.0:
   version "2.3.0"
