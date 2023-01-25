@@ -254,21 +254,21 @@ acorn@^8.8.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
-addok-cluster@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.0.tgz#1a9fe46f97319cec6764ed6492ea4400419cdf35"
-  integrity sha512-OyUDu0LnihRhCXGX1F/Y/K8mp9n/UfwftanOakqr+gGALIh0D5YzPGGFhYXo7evlpsRr+7JeWoUALk6AOwyY/g==
+addok-cluster@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.1.tgz#cd970d96b8c3569d4298684f487ce91012061734"
+  integrity sha512-9Fg97K12u9p7h4LwcXrs9neJOCY0RCg8pzfbb6Vaz+lzItUpgwgdvdHIIHYbZq7cqwelS5TXoryS8qz39J0sbA==
   dependencies:
     debug "^4.3.4"
     http-errors "^2.0.0"
     lodash-es "^4.17.21"
     python-shell "^3.0.1"
-    supports-color "^9.2.3"
+    supports-color "^9.3.1"
 
-addok-cluster@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.1.tgz#cd970d96b8c3569d4298684f487ce91012061734"
-  integrity sha512-9Fg97K12u9p7h4LwcXrs9neJOCY0RCg8pzfbb6Vaz+lzItUpgwgdvdHIIHYbZq7cqwelS5TXoryS8qz39J0sbA==
+addok-cluster@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/addok-cluster/-/addok-cluster-0.4.2.tgz#319130f3afc082866f549d35b60bf0f52b829d82"
+  integrity sha512-rDSAkX33dG21YmHKTBNJpW8T/03g2n7cqJ8tqwWnffrKGbBsgRS/pC5M3Et/+t7ZwrG7xgzhE73B4QE3yk23SQ==
   dependencies:
     debug "^4.3.4"
     http-errors "^2.0.0"
@@ -3252,11 +3252,6 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   integrity sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==
   dependencies:
     has-flag "^4.0.0"
-
-supports-color@^9.2.3:
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-9.2.3.tgz#a6e2c97fc20c80abecd69e50aebe4783ff77d45a"
-  integrity sha512-aszYUX/DVK/ed5rFLb/dDinVJrQjG/vmU433wtqVSD800rYsJNWxh2R3USV90aLSU+UsyQkbNeffVLzc6B6foA==
 
 supports-color@^9.3.1:
   version "9.3.1"
