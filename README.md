@@ -9,8 +9,12 @@ A full-featured HTTP API for addok
 - redis 7 and above
 - wget or curl
 - unzip
+- python 3.10
+- valid addok install (conform with addok.conf)
 
-## Download & extract required files
+## Example with French BAN
+
+### Download & extract required files
 
 - Download
 
@@ -38,12 +42,14 @@ cp .env.sample .env
 
 | Environment variable name | Description |
 | --- | --- |
-| `ADDOK_CONFIG_MODULE` | Path to addok configuration file |
-| `SQLITE_DB_PATH` | Path to addok database |
+| `ADDOK_CONFIG_MODULE` * | Path to addok configuration file |
+| `SQLITE_DB_PATH` * | Path to addok database |
 | `ADDOK_FILTERS` | A list of fields to be indexed as available filters |
 | `ADDOK_CLUSTER_NUM_NODES` | Number of nodes to instantiate (default to number of CPUs) |
-| `ADDOK_REDIS_URL` | Connection string to addok Redis instance (can be an array) |
+| `ADDOK_REDIS_URL` * | Connection string to addok Redis instance (can be an array) |
 | `PYTHON_PATH` | Path to `python` executable to use |
+
+***Required**
 
 Replace `ADDOK_CONFIG_MODULE` & `SQLITE_DB_PATH` with the right path.
 If you want to use the currently downloaded data :
@@ -58,6 +64,8 @@ yarn && yarn start
 ```
 
 ## Start redis server (open a new terminal)
+
+### Example with French BAN
 
 Go to data path (`data/` if you followed [Download & extract required files](#download--extract-required-files) steps) and run redis-server
 
