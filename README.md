@@ -12,28 +12,6 @@ A full-featured HTTP API for addok
 - python 3.10
 - valid addok install (conform with addok.conf)
 
-## Example with French BAN
-
-### Download & extract required files
-
-- Download
-
-```bash
-wget https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip -O data.zip
-```
-
-- Extract
-
-```bash
-unzip data.zip -d ./data
-```
-
-- Remove zip archive
-
-```bash
-rm data.zip
-```
-
 ## Copy and edit env file
 
 ```bash
@@ -65,9 +43,43 @@ yarn && yarn start
 
 ## Start redis server (open a new terminal)
 
-### Example with French BAN
+```bash
+redis-server
+```
 
-Go to data path (`data/` if you followed [Download & extract required files](#download--extract-required-files) steps) and run redis-server
+## Example with French BAN
+
+*Assuming you already follow this step [Copy and edit env file](#copy-and-edit-env-file)*
+
+### Download & extract required files
+
+- Download
+
+```bash
+wget https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip -O data.zip
+```
+
+- Extract
+
+```bash
+unzip data.zip -d ./data
+```
+
+- Remove zip archive
+
+```bash
+rm data.zip
+```
+
+### Install dependencies and start node server
+
+```bash
+yarn && yarn start
+```
+
+### Start redis server (open a new terminal)
+
+Go to `data` path and run `redis-server`
 
 ```bash
 cd data && redis-server
