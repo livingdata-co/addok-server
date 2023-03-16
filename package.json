@@ -48,10 +48,7 @@
     }
   },
   "ava": {
-    "require": [
-      "dotenv/config"
-    ],
-    "env": {
+    "environmentVariables": {
       "ADDOK_FILTERS": "citycode,postcode,type"
     }
   },

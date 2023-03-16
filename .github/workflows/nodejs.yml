@@ -24,8 +24,6 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn lint
       - run: yarn test-lcov
-        env:
-          ADDOK_FILTERS: citycode,postcode,type
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
