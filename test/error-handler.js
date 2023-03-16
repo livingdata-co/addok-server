@@ -1,7 +1,7 @@
 import test from 'ava'
 import express from 'express'
 import request from 'supertest'
-import errorHandler from '../error-handler.js'
+import errorHandler from '../lib/error-handler.js'
 
 function createServer(handler) {
   const app = express()

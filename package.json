@@ -10,8 +10,8 @@
   "private": false,
   "scripts": {
     "lint": "xo",
-    "test": "c8 --all ava",
-    "test-lcov": "c8 --reporter=lcov --reporter=text --all ava",
+    "test": "c8 --all ava test/*.js",
+    "test-lcov": "c8 --reporter=lcov --reporter=text --all ava test/*.js",
     "start": "node server"
   },
   "dependencies": {
@@ -44,7 +44,8 @@
         "never"
       ],
       "unicorn/prevent-abbreviations": "off",
-      "import/no-unassigned-import": "off"
+      "import/no-unassigned-import": "off",
+      "ava/no-import-test-files": "off"
     }
   },
   "ava": {

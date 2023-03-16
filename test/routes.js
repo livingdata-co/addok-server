@@ -4,8 +4,8 @@ import test from 'ava'
 import request from 'supertest'
 import express from 'express'
 
-import routes from '../routes.js'
-import {mockCluster} from '../__mocks__/cluster.js'
+import routes from '../lib/routes.js'
+import {mockCluster} from './__mocks__/cluster.js'
 
 const cluster = mockCluster()
 

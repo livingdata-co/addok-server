@@ -2,8 +2,8 @@
 
 import test from 'ava'
 
-import {ensureSingleValue, formatParams, createFeatureCollection} from '../search.js'
-import {mockCluster, featureA, featureB} from '../__mocks__/cluster.js'
+import {ensureSingleValue, formatParams, createFeatureCollection} from '../lib/search.js'
+import {mockCluster, featureA, featureB} from './__mocks__/cluster.js'
 
 test('Ensure single value / with array', t => {
   const value = ['first', 'second', 'last']
