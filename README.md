@@ -1,5 +1,7 @@
 # addok-server
 
+[![node-current](https://img.shields.io/badge/node-%3E%3D%2018.12-brightgreen)](https://img.shields.io/badge/node-%3E%3D%2018.12-brightgreen) [![Coverage Status](https://coveralls.io/repos/github/livingdata-co/addok-server/badge.svg)](https://coveralls.io/github/livingdata-co/addok-server)
+
 A full-featured HTTP API for addok
 
 ## Prerequisites
