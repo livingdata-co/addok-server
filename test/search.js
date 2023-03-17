@@ -1,6 +1,8 @@
+/* eslint-disable unicorn/numeric-separators-style */
+
 import test from 'ava'
 
-import {ensureSingleValue} from '../lib/search.js'
+import {ensureSingleValue, formatParams} from '../lib/search.js'
 
 test('ensure single value / with array', t => {
   const value = ['first', 'second', 'last']
@@ -15,3 +17,28 @@ test('ensure single value / with undefined', t => {
   t.is(ensureSingleValue(undefined), undefined)
 })
 
+test('Format parameters / operation geocode', t => {
+  const params = formatParams({queries: {q: 'Lille', citycode: '57222', limit: 15}, operation: 'geocode'})
+
+  t.deepEqual(params, {
+    autocomplete: true,
+    filters: {
+      citycode: '57222'
+    },
+    lat: undefined,
+    limit: 15,
+    lon: undefined,
+    q: 'Lille'
+  })
+})
+
+test('Format parameters / operation reverse', t => {
+  const params = formatParams({queries: {lon: '3.045433', lat: '50.630992'}, operation: 'reverse'})
+
+  t.deepEqual(params, {
+    filters: {},
+    lat: 50.630992,
+    limit: 5,
+    lon: 3.045433
+  })
+})
