@@ -1,5 +1,7 @@
 # addok-server
 
+[![Coverage Status](https://coveralls.io/repos/github/livingdata-co/addok-server/badge.svg)](https://coveralls.io/github/livingdata-co/addok-server)
+
 A full-featured HTTP API for addok
 
 ## Prerequisites
