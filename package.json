@@ -10,6 +10,8 @@
   "private": false,
   "scripts": {
     "lint": "xo",
+    "test": "c8 --all ava test/*.js",
+    "test-lcov": "c8 --reporter=lcov --reporter=text --all ava test/*.js",
     "start": "node server"
   },
   "dependencies": {
@@ -27,6 +29,9 @@
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
+    "ava": "^5.2.0",
+    "c8": "^7.13.0",
+    "supertest": "^6.3.3",
     "xo": "^0.53.1"
   },
   "xo": {
@@ -40,6 +45,11 @@
       ],
       "unicorn/prevent-abbreviations": "off",
       "import/no-unassigned-import": "off"
+    }
+  },
+  "ava": {
+    "environmentVariables": {
+      "ADDOK_FILTERS": "citycode,postcode,type"
     }
   },
   "engines": {
