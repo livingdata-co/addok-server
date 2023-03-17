@@ -4,20 +4,20 @@ import test from 'ava'
 
 import {ensureSingleValue, formatParams} from '../lib/search.js'
 
-test('ensure single value / with array', t => {
+test('ensureSingleValue / with array', t => {
   const value = ['first', 'second', 'last']
   t.is(ensureSingleValue(value), 'last')
 })
 
-test('ensure single value / with string', t => {
+test('ensureSingleValue / with string', t => {
   t.is(ensureSingleValue('value'), 'value')
 })
 
-test('ensure single value / with undefined', t => {
+test('ensureSingleValue / with undefined', t => {
   t.is(ensureSingleValue(undefined), undefined)
 })
 
-test('Format parameters / operation geocode', t => {
+test('formatParams / operation geocode', t => {
   const params = formatParams({queries: {q: 'Lille', citycode: '57222', limit: 15}, operation: 'geocode'})
 
   t.deepEqual(params, {
@@ -32,7 +32,7 @@ test('Format parameters / operation geocode', t => {
   })
 })
 
-test('Format parameters / operation reverse', t => {
+test('formatParams / operation reverse', t => {
   const params = formatParams({queries: {lon: '3.045433', lat: '50.630992'}, operation: 'reverse'})
 
   t.deepEqual(params, {
