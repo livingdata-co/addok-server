@@ -2,7 +2,7 @@
 
 import test from 'ava'
 
-import {ensureSingleValue, formatParams} from '../lib/search.js'
+import {ensureSingleValue, formatParams, createFeatureCollection} from '../lib/search.js'
 
 test('ensureSingleValue / with array', t => {
   const value = ['first', 'second', 'last']
@@ -41,4 +41,42 @@ test('formatParams / operation reverse', t => {
     limit: 5,
     lon: 3.045433
   })
+})
+
+test('createFeatureCollection / operation geocode', t => {
+  const features = [{id: 'foo'}, {id: 'bar'}]
+  const params = {q: 'Lille', limit: 2, filters: {}}
+  const result = createFeatureCollection({params, operation: 'geocode', results: features})
+
+  t.deepEqual(result, {
+    type: 'FeatureCollection',
+    version: 'draft',
+    features,
+    attribution: 'BAN',
+    licence: 'ETALAB-2.0',
+    query: 'Lille',
+    filters: undefined,
+    center: undefined,
+    limit: 2
+  })
+  t.is(Object.keys(result).length, 9)
+})
+
+test('createFeatureCollection / operation reverse', t => {
+  const features = [{id: 'foo'}, {id: 'bar'}]
+  const params = {q: 'Bordeaux', filters: {}}
+  const result = createFeatureCollection({params, operation: 'reverse', results: features})
+
+  t.deepEqual(result, {
+    type: 'FeatureCollection',
+    version: 'draft',
+    features,
+    attribution: 'BAN',
+    licence: 'ETALAB-2.0',
+    query: 'Bordeaux',
+    filters: undefined,
+    center: undefined,
+    limit: 1
+  })
+  t.is(Object.keys(result).length, 9)
 })
