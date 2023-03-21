@@ -86,3 +86,81 @@ Go to `data` path and run `redis-server`
 ```bash
 cd data && redis-server
 ```
+
+## Use
+
+### Endpoints
+
+*in the examples we assume that the server was started on the default port : 5000*
+
+### **GET** `/search`
+
+| Param | Description | Default |
+| --- | --- | --- |
+| `q` | Text input to geocode (required) | |
+| `autocomplete` | Auto-complete mode (`boolean`) | `false` |
+| `lon`, `lat` | Coordinates of reference position | |
+| `limit` | Number of returned results | `5` |
+| `filters` | Additional filters (depend on addok config) | `{}` |
+
+*example :*
+`curl "http://localhost:5000/search/?q=lil&autocomplete=1&limit=15"`
+
+### **GET** `/reverse`
+
+| Param | Description | Default |
+| --- | --- | --- |
+| `lon`, `lat` | Coordinates of reference position (required) | |
+| `filters` | Additional filters (depend on addok config) | `{}` |
+
+*example :*
+`curl "http://localhost:5000/reverse/?lon=2.2&lat=48.12?type=locality"`
+
+In this example, `type` is a filter. It was added to addok configuration.
+
+### **POST** `/batch`
+
+This endpoint allows you to process multiple requests in a single POST request.
+You must send an array of requests that will be processed in parallel.
+
+| Param | Description |
+| --- | --- |
+| `requests` | An array of requests to process. Each request must be an object containing the keys `id`, `operation` and `params` (required) |
+
+**Request object**
+
+| Key | Description | Value example |
+| --- | --- | --- |
+|`id` | Identify each operation | "foo" (string) |
+|`operation` | Define wich operation to execute | "geocode" or "reverse" (string)  |
+| `params` | Object with same params used for "geocode" or "reverse" | `{"q": "lille"}` (geocode) - `{"lon": 2.2, "lat": 48.12}` (reverse)
+
+*batch body request example*
+```json
+{
+  "requests": [
+    {"id": "foo", "operation": "geocode", "params": {"q": "lille"}},
+    {"id": "bar", "operation": "reverse", "params": {"lon": 2.2, "lat": 48.12}}
+  ]
+}
+```
+
+## **POST** `/search/csv`
+
+The CSV file must be passed via data parameter like this : `data=@path/to/file.csv`
+
+*example :*
+`curl -X POST -F data=@path/to/file.csv http://localhost:5000/search/csv/`
+
+You can define the columns to be used via multiple columns parameters
+
+*example :*
+`curl -X POST -F data=@path/to/file.csv -F columns=street -F columns=city http://localhost:5000/search/csv/`
+
+## **POST** `/reverse/csv`
+
+The CSV file, encoded in UTF-8 must be passed via the data parameter. It must contain lon and lat 
+columns
+
+*example :*
+`curl -X POST -F data=@path/to/file.csv http://localhost:5000/reverse/csv/`
