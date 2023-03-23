@@ -5,10 +5,7 @@ WORKDIR /app
 
 # Addok / Python part
 
-# Install setuptools < 58 until addok==1.1.0rc3 is not released
-RUN pip install setuptools==57.5.0
-
-RUN pip install cython addok==1.1.0rc2 addok-fr==1.0.1 addok-france==1.1.3 addok-sqlite-store==1.0.1
+RUN pip install cython addok==1.1.0 addok-fr==1.0.1 addok-france==1.1.3 addok-sqlite-store==1.0.1
 
 ENV ADDOK_CONFIG_MODULE /etc/addok/addok.conf
 ENV SQLITE_DB_PATH /data/addok.db
