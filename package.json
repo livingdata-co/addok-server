@@ -32,7 +32,7 @@
     "ava": "^6.1.1",
     "c8": "^9.1.0",
     "supertest": "^6.3.4",
-    "xo": "^0.53.1"
+    "xo": "^0.56.0"
   },
   "xo": {
     "semicolon": false,
@@ -44,7 +44,8 @@
         "never"
       ],
       "unicorn/prevent-abbreviations": "off",
-      "import/no-unassigned-import": "off"
+      "import/no-unassigned-import": "off",
+      "import/order": "off"
     }
   },
   "ava": {

@@ -1,7 +1,6 @@
 /* eslint-disable unicorn/numeric-separators-style */
 
 import test from 'ava'
-
 import {ensureSingleValue, formatParams, createFeatureCollection} from '../lib/search.js'
 
 test('ensureSingleValue / with array', t => {
