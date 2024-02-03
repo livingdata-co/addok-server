@@ -23,19 +23,21 @@ cp .env.sample .env
 | Environment variable name | Description |
 | --- | --- |
 | `ADDOK_CONFIG_MODULE` * | Path to addok configuration file |
-| `SQLITE_DB_PATH` * | Path to addok database |
+| `SQLITE_DB_PATH` | Path to addok SQLite database |
 | `ADDOK_FILTERS` | A list of fields to be indexed as available filters |
 | `ADDOK_CLUSTER_NUM_NODES` | Number of nodes to instantiate (default to number of CPUs) |
-| `ADDOK_REDIS_URL` * | Connection string to addok Redis instance (can be an array) |
+| `ADDOK_REDIS_URL` | Connection string to addok Redis instance (can be an array) |
+| `ADDOK_REDIS_DATA_DIR` | Path to Redis data dir (in case you want `addok-server` handle its own `redis-server` instance) |
+| `ADDOK_REDIS_STARTUP_TIMEOUT` | Limit time allowed to Redis to start when using managed Redis |
 | `PYTHON_PATH` | Path to `python` executable to use |
 
 ***Required**
 
-Replace `ADDOK_CONFIG_MODULE` & `SQLITE_DB_PATH` with the right path.
 If you want to use the currently downloaded data :
 
 - `ADDOK_CONFIG_MODULE=data/addok.conf`
 - `SQLITE_DB_PATH=data/addok.db`
+- `ADDOK_REDIS_DATA_DIR=data/`
 
 ## Install dependencies and start node server
 
@@ -159,7 +161,7 @@ You can define the columns to be used via multiple columns parameters
 
 ## **POST** `/reverse/csv`
 
-The CSV file, encoded in UTF-8 must be passed via the data parameter. It must contain lon and lat 
+The CSV file, encoded in UTF-8 must be passed via the data parameter. It must contain lon and lat
 columns
 
 *example :*
