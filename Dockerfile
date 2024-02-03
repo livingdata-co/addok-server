@@ -27,7 +27,7 @@ COPY --from=build /root/.local /root/.local
 
 COPY . .
 
-ENV ADDOK_CONFIG_MODULE /etc/addok/addok.conf
+ENV ADDOK_CONFIG_MODULE /data/addok.conf
 ENV SQLITE_DB_PATH /data/addok.db
 ENV ADDOK_REDIS_DATA_DIR /data
 
