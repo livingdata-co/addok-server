@@ -15,7 +15,7 @@
     "start": "node server"
   },
   "dependencies": {
-    "@livingdata/tabular-data-helpers": "^0.0.7",
+    "@livingdata/tabular-data-helpers": "^0.0.13",
     "addok-cluster": "^0.8.0",
     "addok-geocode-stream": "^0.24.0",
     "content-disposition": "^0.5.4",
