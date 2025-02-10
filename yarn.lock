@@ -466,10 +466,10 @@ addok-cluster@^0.8.0:
     python-shell "^5.0.0"
     supports-color "^9.4.0"
 
-addok-geocode-stream@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/addok-geocode-stream/-/addok-geocode-stream-0.24.0.tgz#589a083efdcf3c1b8d9fd369eec1a3c95f7bd4e0"
-  integrity sha512-ZfNT2u5GnSeyE7zzUisCHc410WSHCRuqrz/44dxLLzT/87V1DFnQp/tlcO9qSWXB5Tyg+zJi5nn9SVkkngns1w==
+addok-geocode-stream@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/addok-geocode-stream/-/addok-geocode-stream-0.25.0.tgz#85e66c41b1782049f966e956a031b380b0ce2e01"
+  integrity sha512-BeVygE/nlMwU4AE8+OHAiVsLILj34g36OPcqUgiOyR60Syi1AU5NmKITfU8O6jo1GpKlgqCYTxGBB5E2844whg==
   dependencies:
     addok-cluster "^0.7.0"
     csv-parser "^3.0.0"
