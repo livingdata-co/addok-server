@@ -57,7 +57,7 @@ test('createFeatureCollection / operation geocode', t => {
     center: undefined,
     limit: 2
   })
-  t.is(Object.keys(result).length, 9)
+  t.is(Object.keys(result).length, 8)
 })
 
 test('createFeatureCollection / operation reverse', t => {
@@ -75,5 +75,5 @@ test('createFeatureCollection / operation reverse', t => {
     center: undefined,
     limit: 1
   })
-  t.is(Object.keys(result).length, 9)
+  t.is(Object.keys(result).length, 8)
 })
