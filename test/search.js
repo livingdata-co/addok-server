@@ -49,7 +49,6 @@ test('createFeatureCollection / operation geocode', t => {
 
   t.deepEqual(result, {
     type: 'FeatureCollection',
-    version: 'draft',
     features,
     attribution: 'BAN',
     licence: 'ETALAB-2.0',
@@ -68,7 +67,6 @@ test('createFeatureCollection / operation reverse', t => {
 
   t.deepEqual(result, {
     type: 'FeatureCollection',
-    version: 'draft',
     features,
     attribution: 'BAN',
     licence: 'ETALAB-2.0',

@@ -23,8 +23,7 @@ test('routes / search / results', async t => {
       {id: 'bar'}
     ],
     licence: 'ETALAB-2.0',
-    limit: 5,
-    version: 'draft'
+    limit: 5
   })
 })
 
@@ -44,8 +43,7 @@ test('routes / search / no results', async t => {
     attribution: 'BAN',
     features: [],
     licence: 'ETALAB-2.0',
-    limit: 5,
-    version: 'draft'
+    limit: 5
   })
 })
 
@@ -67,8 +65,7 @@ test('routes / reverse / results', async t => {
       {id: 'foo'}
     ],
     licence: 'ETALAB-2.0',
-    limit: 1,
-    version: 'draft'
+    limit: 1
   })
 })
 
@@ -88,8 +85,7 @@ test('routes / reverse / no results', async t => {
     attribution: 'BAN',
     features: [],
     licence: 'ETALAB-2.0',
-    limit: 1,
-    version: 'draft'
+    limit: 1
   })
 })
 
