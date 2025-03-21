@@ -15,14 +15,13 @@ services:
     volumes:
       - ./data/addok.conf:/etc/addok/addok.conf
       - ./data/addok.db:/data/addok.db
+      - ./data/dump.rdb:/data/dump.rdb
     networks:
       - addok-server-network
 
   addok-server-redis:
     image: etalab/addok-redis
     restart: always
-    volumes:
-      - ./data/dump.rdb:/data/dump.rdb
     networks:
       - addok-server-network
 
