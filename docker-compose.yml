@@ -1,30 +1,11 @@
-version: '3.9'
-
 services:
   addok-server:
     build: .
     environment:
-      REDIS_HOST: addok-server-redis
       ADDOK_FILTERS: citycode,postcode,type
     ports:
       - '5000:5000'
-    depends_on:
-      - addok-server-redis
-    links:
-      - addok-server-redis
     volumes:
-      - ./data/addok.conf:/etc/addok/addok.conf
+      - ./data/addok.conf:/data/addok.conf
       - ./data/addok.db:/data/addok.db
-    networks:
-      - addok-server-network
-
-  addok-server-redis:
-    image: etalab/addok-redis
-    restart: always
-    volumes:
       - ./data/dump.rdb:/data/dump.rdb
-    networks:
-      - addok-server-network
-
-networks:
-  addok-server-network:
