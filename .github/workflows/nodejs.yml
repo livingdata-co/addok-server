@@ -15,15 +15,14 @@ jobs:
         node-version: [20.x, 22.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn lint
-      - run: yarn test-lcov
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test-lcov
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:

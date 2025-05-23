@@ -7,7 +7,6 @@ A full-featured HTTP API for addok
 ## Prerequisites
 
 - Node.js 18 LTS and above
-- yarn
 - redis 7 and above
 - wget or curl
 - unzip
@@ -42,7 +41,7 @@ If you want to use the currently downloaded data :
 ## Install dependencies and start node server
 
 ```bash
-yarn && yarn start
+npm install && npm run start
 ```
 
 ## Start redis server (open a new terminal)
@@ -78,7 +77,7 @@ rm data.zip
 ### Install dependencies and start node server
 
 ```bash
-yarn && yarn start
+npm install && npm run start
 ```
 
 ### Start redis server (open a new terminal)

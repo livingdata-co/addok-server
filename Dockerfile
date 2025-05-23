@@ -4,8 +4,8 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y build-essential gcc
 
-COPY package.json yarn.lock ./
-RUN yarn install --prod --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci --omit dev
 
 COPY requirements.txt ./
 RUN pip install --user -r requirements.txt
