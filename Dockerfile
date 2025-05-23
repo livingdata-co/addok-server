@@ -11,7 +11,7 @@ COPY requirements.txt ./
 RUN pip install --user -r requirements.txt
 
 # Stage 2
-FROM redis:7.0 AS redis
+FROM redis:8 AS redis
 
 # Stage 3
 FROM nikolaik/python-nodejs:python3.10-nodejs20-slim
