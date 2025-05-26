@@ -7,7 +7,7 @@ A full-featured HTTP API for addok
 ## Prerequisites
 
 - Node.js 18 LTS and above
-- redis 7 and above
+- redis 7
 - wget or curl
 - unzip
 - python 3.10
