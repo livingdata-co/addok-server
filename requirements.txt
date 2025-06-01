@@ -1,4 +1,4 @@
-addok==1.1.2
+addok==1.2.0
 addok-fr==1.0.1
 addok-france==1.1.3
 addok-sqlite-store==1.0.1
