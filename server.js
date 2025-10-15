@@ -13,7 +13,13 @@ import routes from './lib/routes.js'
 const PORT = process.env.PORT || 5000
 
 const app = express()
-const cluster = await createCluster()
+
+const cluster = await createCluster({
+  onTerminate(reason) {
+    console.log(`Cluster terminated: ${reason}`)
+    process.exit(0)
+  }
+})
 
 app.disable('x-powered-by')
 
@@ -25,6 +31,27 @@ app.use(cors({origin: true}))
 
 app.use('/', routes(cluster))
 
-app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
   console.log(`Start listening on port ${PORT}`)
 })
+
+// Graceful shutdown on SIGTERM and SIGINT
+async function handleShutdown(signal) {
+  console.log(`Received ${signal}, gracefully shutting down...`)
+
+  // Close HTTP server first
+  httpServer.close(() => {
+    console.log('Server closed')
+  })
+
+  // Then terminate the cluster
+  try {
+    await cluster.end()
+  } catch (error) {
+    console.error('Error during cluster shutdown:', error)
+    process.exit(1)
+  }
+}
+
+process.on('SIGTERM', () => handleShutdown('SIGTERM'))
+process.on('SIGINT', () => handleShutdown('SIGINT'))
