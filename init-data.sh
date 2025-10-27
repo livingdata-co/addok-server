@@ -71,7 +71,7 @@ unzip -q "$ARCHIVE_PATH" -d "$DATA_DIR" || {
 }
 
 # Clean up temporary file if we downloaded it
-if [ "$ARCHIVE_PATH" == "$TEMP_ARCHIVE" ]; then
+if [ "$ARCHIVE_PATH" = "$TEMP_ARCHIVE" ]; then
     echo "Cleaning up temporary files..."
     rm -f "$TEMP_ARCHIVE"
 fi
