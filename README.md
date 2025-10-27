@@ -19,6 +19,8 @@ A full-featured HTTP API for addok
 cp .env.sample .env
 ```
 
+You can add `ADDOK_DATA_URL` to your `.env` file to automatically download and extract data when running `init-data.sh`.
+
 | Environment variable name | Description |
 | --- | --- |
 | `ADDOK_CONFIG_MODULE` * | Path to addok configuration file |
@@ -29,6 +31,7 @@ cp .env.sample .env
 | `ADDOK_REDIS_DATA_DIR` | Path to Redis data dir (in case you want `addok-server` handle its own `redis-server` instance) |
 | `ADDOK_REDIS_STARTUP_TIMEOUT` | Limit time allowed to Redis to start when using managed Redis |
 | `PYTHON_PATH` | Path to `python` executable to use |
+| `ADDOK_DATA_URL` | URL or local path to addok data archive (zip). If set, data will be automatically downloaded and extracted to `data/` directory |
 
 ***Required**
 
@@ -54,7 +57,64 @@ redis-server
 
 *Assuming you already follow this step [Copy and edit env file](#copy-and-edit-env-file)*
 
-### Download & extract required files
+### Option 1: Using Docker with automatic data download
+
+Set the `ADDOK_DATA_URL` environment variable to automatically download and extract the data:
+
+```bash
+docker run -p 5000:5000 \
+  -e ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip \
+  addok-server
+```
+
+Or using a local file mounted as a volume:
+
+```bash
+docker run -p 5000:5000 \
+  -v /path/to/addok-france-bundle.zip:/data/archive.zip \
+  -e ADDOK_DATA_URL=/data/archive.zip \
+  addok-server
+```
+
+If `ADDOK_DATA_URL` is not set, you can mount a pre-extracted data directory:
+
+```bash
+docker run -p 5000:5000 \
+  -v /path/to/extracted/data:/data \
+  addok-server
+```
+
+### Option 2: Using init-data.sh script
+
+You can use the initialization script to automatically download and extract data.
+
+**With environment variable:**
+
+```bash
+export ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip
+./init-data.sh
+```
+
+**With .env file:**
+
+Add to your `.env` file:
+```
+ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip
+```
+
+Then run:
+```bash
+./init-data.sh
+```
+
+**With a local file:**
+
+```bash
+export ADDOK_DATA_URL=/path/to/addok-france-bundle.zip
+./init-data.sh
+```
+
+### Option 3: Manual download & extract
 
 - Download
 
