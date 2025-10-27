@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@livingdata/tabular-data-helpers": "^0.0.13",
-    "addok-cluster": "^0.10.0",
-    "addok-geocode-stream": "^0.26.0",
+    "addok-cluster": "^0.11.0",
+    "addok-geocode-stream": "^0.27.0",
     "content-disposition": "^0.5.4",
     "cors": "^2.8.5",
     "csv-write-stream": "^2.0.0",

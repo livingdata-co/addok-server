@@ -184,3 +184,102 @@ test('routes / batch / request contains more than 100 items', async t => {
   t.is(body.message, 'requests must not contains more than 100 items')
 })
 
+test('routes / batch / with multiple filter values as string', async t => {
+  let capturedParams
+
+  const cluster = {
+    geocode(params) {
+      capturedParams = params
+      return [
+        {geometry: {coordinates: [2.1, 49.12]}, properties: {id: 'foo.0', score: 0.5}}
+      ]
+    }
+  }
+
+  const app = express()
+  app.use('/', createRouter(cluster))
+
+  const {status} = await request(app).post('/batch').send({
+    requests: [
+      {
+        id: 'request1',
+        operation: 'geocode',
+        params: {
+          q: 'foo',
+          filters: {citycode: '59000+59100'}
+        }
+      }
+    ]
+  })
+
+  t.is(status, 200)
+  t.truthy(capturedParams.filters)
+  t.deepEqual(capturedParams.filters.citycode, ['59000', '59100'])
+})
+
+test('routes / batch / with multiple filter values as array', async t => {
+  let capturedParams
+
+  const cluster = {
+    geocode(params) {
+      capturedParams = params
+      return [
+        {geometry: {coordinates: [2.1, 49.12]}, properties: {id: 'foo.0', score: 0.5}}
+      ]
+    }
+  }
+
+  const app = express()
+  app.use('/', createRouter(cluster))
+
+  const {status} = await request(app).post('/batch').send({
+    requests: [
+      {
+        id: 'request1',
+        operation: 'geocode',
+        params: {
+          q: 'foo',
+          filters: {citycode: ['59000', '59100']}
+        }
+      }
+    ]
+  })
+
+  t.is(status, 200)
+  t.truthy(capturedParams.filters)
+  t.deepEqual(capturedParams.filters.citycode, ['59000', '59100'])
+})
+
+test('routes / batch / with global filters', async t => {
+  let capturedParams
+
+  const cluster = {
+    geocode(params) {
+      capturedParams = params
+      return [
+        {geometry: {coordinates: [2.1, 49.12]}, properties: {id: 'foo.0', score: 0.5}}
+      ]
+    }
+  }
+
+  const app = express()
+  app.use('/', createRouter(cluster))
+
+  const {status} = await request(app).post('/batch').send({
+    params: {
+      filters: {type: 'municipality+locality'}
+    },
+    requests: [
+      {
+        id: 'request1',
+        operation: 'geocode',
+        params: {q: 'foo'}
+      }
+    ]
+  })
+
+  t.is(status, 200)
+  t.truthy(capturedParams.filters)
+  t.deepEqual(capturedParams.filters.type, ['municipality', 'locality'])
+})
+
