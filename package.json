@@ -26,7 +26,7 @@
     "http-errors": "^2.0.0",
     "into-stream": "^8.0.1",
     "morgan": "^1.10.1",
-    "multer": "^2.0.0",
+    "multer": "^2.0.2",
     "on-finished": "^2.4.1"
   },
   "devDependencies": {
