@@ -71,8 +71,8 @@ Or using a local file mounted as a volume:
 
 ```bash
 docker run -p 5000:5000 \
-  -v /path/to/addok-france-bundle.zip:/data/archive.zip \
-  -e ADDOK_DATA_URL=/data/archive.zip \
+  -v /path/to/addok-france-bundle.zip:/app/archive.zip \
+  -e ADDOK_DATA_URL=/app/archive.zip \
   addok-server
 ```
 

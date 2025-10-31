@@ -3,6 +3,7 @@ services:
     build: .
     environment:
       ADDOK_FILTERS: citycode,postcode,type
+      # Customize the data source URL below.
       ADDOK_DATA_URL: https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip
     ports:
       - '5000:5000'
