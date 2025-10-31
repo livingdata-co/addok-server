@@ -56,7 +56,7 @@ else
     # Download from URL
     echo "Downloading data from: ${ADDOK_DATA_URL}"
     echo "This may take a few minutes..."
-    wget -nv --show-progress "$ADDOK_DATA_URL" -O "$TEMP_ARCHIVE" || {
+    wget --progress=dot:mega "$ADDOK_DATA_URL" -O "$TEMP_ARCHIVE" || {
         echo "Error: Failed to download ${ADDOK_DATA_URL}"
         exit 1
     }
