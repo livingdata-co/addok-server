@@ -11,7 +11,7 @@ COPY requirements.txt ./
 RUN pip install --user -r requirements.txt
 
 # Stage 2
-FROM redis:7.4 AS redis
+FROM redis:8 AS redis
 
 # Stage 3
 FROM nikolaik/python-nodejs:python3.13-nodejs22-slim
@@ -27,9 +27,14 @@ COPY --from=build /root/.local /root/.local
 
 COPY . .
 
-ENV ADDOK_CONFIG_MODULE=/data/addok.conf
-ENV SQLITE_DB_PATH=/data/addok.db
-ENV ADDOK_REDIS_DATA_DIR=/data
+# Copy and make init scripts executable
+COPY init-data.sh /app/init-data.sh
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/init-data.sh /app/docker-entrypoint.sh
+
+ENV ADDOK_CONFIG_MODULE=/app/data/addok.conf
+ENV SQLITE_DB_PATH=/app/data/addok.db
+ENV ADDOK_REDIS_DATA_DIR=/app/data
 
 ENV PATH=/root/.local/bin:$PATH
 
@@ -37,4 +42,4 @@ ENV NODE_ENV=production
 
 EXPOSE 5000
 
-CMD ["node", "server.js"]
+CMD ["/app/docker-entrypoint.sh"]
