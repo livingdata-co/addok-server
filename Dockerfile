@@ -1,5 +1,5 @@
 # Stage 1
-FROM nikolaik/python-nodejs:python3.13-nodejs22-slim AS build
+FROM nikolaik/python-nodejs:python3.13-nodejs24-slim AS build
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y build-essential gcc
@@ -14,7 +14,7 @@ RUN pip install --user -r requirements.txt
 FROM redis:8 AS redis
 
 # Stage 3
-FROM nikolaik/python-nodejs:python3.13-nodejs22-slim
+FROM nikolaik/python-nodejs:python3.13-nodejs24-slim
 WORKDIR /app
 
 RUN apt-get update && \
