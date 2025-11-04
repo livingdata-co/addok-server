@@ -18,7 +18,7 @@ FROM nikolaik/python-nodejs:python3.13-nodejs24-slim
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y unzip wget && \
+    apt-get install -y wget zstd tar curl ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=redis /usr/local/bin/redis-server /usr/local/bin/redis-server
