@@ -4,6 +4,8 @@ import express from 'express'
 import createError from 'http-errors'
 import createRouter from '../lib/router.js'
 
+const testConfig = {filters: {}}
+
 test('createRouter / search / results', async t => {
   const cluster = {
     geocode() {
@@ -12,7 +14,7 @@ test('createRouter / search / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
@@ -35,7 +37,7 @@ test('createRouter / search / no results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
@@ -55,7 +57,7 @@ test('createRouter / reverse / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
@@ -77,7 +79,7 @@ test('createRouter / reverse / no results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
@@ -97,7 +99,7 @@ test('createRouter / search / invalid parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body} = await request(app).get('/search').expect(400)
   t.is(body.message, 'Invalid search parameter')
@@ -111,7 +113,7 @@ test('createRouter / reverse / invalid parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body} = await request(app).get('/reverse').expect(400)
   t.is(body.message, 'Invalid reverse parameter')

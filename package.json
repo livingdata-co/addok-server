@@ -50,11 +50,6 @@
       "import/order": "off"
     }
   },
-  "ava": {
-    "environmentVariables": {
-      "ADDOK_FILTERS": "citycode,postcode,type"
-    }
-  },
   "engines": {
     "node": ">= 22.11 < 25"
   }

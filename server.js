@@ -32,7 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
-app.use('/', createRouter({cluster, config}))
+app.use('/', createRouter({cluster, ...config}))
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Start listening on port ${PORT}`)

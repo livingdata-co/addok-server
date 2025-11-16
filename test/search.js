@@ -22,43 +22,57 @@ test('ensureSingleValue / with undefined', t => {
 })
 
 test('parseFilterValues / with undefined', t => {
-  t.deepEqual(parseFilterValues(undefined), [])
+  t.deepEqual(parseFilterValues('testfilter', undefined), [])
 })
 
 test('parseFilterValues / with single string', t => {
-  t.deepEqual(parseFilterValues('value'), ['value'])
+  t.deepEqual(parseFilterValues('testfilter', 'value'), ['value'])
 })
 
 test('parseFilterValues / with plus separator', t => {
-  t.deepEqual(parseFilterValues('value1+value2+value3'), ['value1', 'value2', 'value3'])
+  t.deepEqual(parseFilterValues('testfilter', 'value1+value2+value3'), ['value1', 'value2', 'value3'])
 })
 
 test('parseFilterValues / with space separator', t => {
-  t.deepEqual(parseFilterValues('value1 value2 value3'), ['value1', 'value2', 'value3'])
+  t.deepEqual(parseFilterValues('testfilter', 'value1 value2 value3'), ['value1', 'value2', 'value3'])
 })
 
 test('parseFilterValues / with array of strings', t => {
-  t.deepEqual(parseFilterValues(['value1', 'value2']), ['value1', 'value2'])
+  t.deepEqual(parseFilterValues('testfilter', ['value1', 'value2']), ['value1', 'value2'])
 })
 
 test('parseFilterValues / with array of strings with plus', t => {
-  t.deepEqual(parseFilterValues(['value1+value2', 'value3']), ['value1', 'value2', 'value3'])
+  t.deepEqual(parseFilterValues('testfilter', ['value1+value2', 'value3']), ['value1', 'value2', 'value3'])
 })
 
 test('parseFilterValues / with duplicates', t => {
-  t.deepEqual(parseFilterValues('value1+value2+value1'), ['value1', 'value2'])
+  t.deepEqual(parseFilterValues('testfilter', 'value1+value2+value1'), ['value1', 'value2'])
 })
 
 test('parseFilterValues / with whitespace', t => {
-  t.deepEqual(parseFilterValues('  value1  +  value2  '), ['value1', 'value2'])
+  t.deepEqual(parseFilterValues('testfilter', '  value1  +  value2  '), ['value1', 'value2'])
 })
 
 test('parseFilterValues / with empty values', t => {
-  t.deepEqual(parseFilterValues('value1++value2'), ['value1', 'value2'])
+  t.deepEqual(parseFilterValues('testfilter', 'value1++value2'), ['value1', 'value2'])
+})
+
+test('parseFilterValues / throws when exceeding maxValues', t => {
+  const error = t.throws(() => parseFilterValues('citycode', 'v1+v2+v3', 2), {instanceOf: Error})
+  t.regex(error.message, /Too many values for filter "citycode"/)
+})
+
+test('parseFilterValues / allows exact maxValues', t => {
+  t.deepEqual(parseFilterValues('testfilter', 'v1+v2', 2), ['v1', 'v2'])
+})
+
+test('parseFilterValues / no limit when maxValues undefined', t => {
+  t.deepEqual(parseFilterValues('testfilter', 'v1+v2+v3+v4+v5'), ['v1', 'v2', 'v3', 'v4', 'v5'])
 })
 
 test('formatParams / operation geocode', t => {
-  const params = formatParams({queries: {q: 'Lille', citycode: '57222', limit: 15}, operation: 'geocode'})
+  const filters = {citycode: {maxValues: 100}}
+  const params = formatParams({query: {q: 'Lille', citycode: '57222', limit: 15}, operation: 'geocode', filters})
 
   t.deepEqual(params, {
     autocomplete: true,
@@ -73,7 +87,8 @@ test('formatParams / operation geocode', t => {
 })
 
 test('formatParams / operation geocode with multiple filter values', t => {
-  const params = formatParams({queries: {q: 'Lille', citycode: '57222+59000'}, operation: 'geocode'})
+  const filters = {citycode: {maxValues: 100}}
+  const params = formatParams({query: {q: 'Lille', citycode: '57222+59000'}, operation: 'geocode', filters})
 
   t.deepEqual(params, {
     autocomplete: true,
@@ -88,7 +103,8 @@ test('formatParams / operation geocode with multiple filter values', t => {
 })
 
 test('formatParams / operation geocode with repeated filter parameter', t => {
-  const params = formatParams({queries: {q: 'Lille', citycode: ['57222', '59000']}, operation: 'geocode'})
+  const filters = {citycode: {maxValues: 100}}
+  const params = formatParams({query: {q: 'Lille', citycode: ['57222', '59000']}, operation: 'geocode', filters})
 
   t.deepEqual(params, {
     autocomplete: true,
@@ -103,7 +119,8 @@ test('formatParams / operation geocode with repeated filter parameter', t => {
 })
 
 test('formatParams / operation reverse', t => {
-  const params = formatParams({queries: {lon: '3.045433', lat: '50.630992'}, operation: 'reverse'})
+  const filters = {}
+  const params = formatParams({query: {lon: '3.045433', lat: '50.630992'}, operation: 'reverse', filters})
 
   t.deepEqual(params, {
     filters: {},
@@ -147,4 +164,14 @@ test('createFeatureCollection / operation reverse', t => {
     limit: 1
   })
   t.is(Object.keys(result).length, 8)
+})
+
+test('formatParams / throws when exceeding maxValues', t => {
+  const filters = {citycode: {maxValues: 1}}
+  const error = t.throws(() => formatParams({
+    query: {q: 'Lille', citycode: '57222+59000'},
+    operation: 'geocode',
+    filters
+  }), {instanceOf: Error})
+  t.regex(error.message, /Too many values for filter/)
 })

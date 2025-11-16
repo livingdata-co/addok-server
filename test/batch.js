@@ -3,6 +3,8 @@ import request from 'supertest'
 import express from 'express'
 import createRouter from '../lib/router.js'
 
+const testConfig = {filters: {}}
+
 test('createRouter / batch / results', async t => {
   const cluster = {
     geocode({q}) {
@@ -22,7 +24,7 @@ test('createRouter / batch / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -63,7 +65,7 @@ test('createRouter / batch / no result', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -86,7 +88,7 @@ test('createRouter / batch / wrong operation', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -110,7 +112,7 @@ test('createRouter / batch / no array', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: {id: 'request', operation: 'geocode', params: {q: 'foo1'}}
@@ -129,7 +131,7 @@ test('createRouter / batch / wrong operation in parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -150,7 +152,7 @@ test('createRouter / batch / missing params', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -171,7 +173,7 @@ test('createRouter / batch / request contains more than 100 items', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: testConfig.filters}))
 
   const requests = Array.from({length: 101})
 
@@ -196,8 +198,10 @@ test('createRouter / batch / with multiple filter values as string', async t => 
     }
   }
 
+  const config = {filters: {citycode: {maxValues: 2}}}
+
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: config.filters}))
 
   const {status} = await request(app).post('/batch').send({
     requests: [
@@ -229,8 +233,10 @@ test('createRouter / batch / with multiple filter values as array', async t => {
     }
   }
 
+  const config = {filters: {citycode: {maxValues: 2}}}
+
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: config.filters}))
 
   const {status} = await request(app).post('/batch').send({
     requests: [
@@ -262,8 +268,10 @@ test('createRouter / batch / with global filters', async t => {
     }
   }
 
+  const config = {filters: {type: {maxValues: 2}}}
+
   const app = express()
-  app.use('/', createRouter({cluster}))
+  app.use('/', createRouter({cluster, filters: config.filters}))
 
   const {status} = await request(app).post('/batch').send({
     params: {
