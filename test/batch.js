@@ -1,9 +1,9 @@
 import test from 'ava'
 import request from 'supertest'
 import express from 'express'
-import createRouter from '../lib/routes.js'
+import createRouter from '../lib/router.js'
 
-test('routes / batch / results', async t => {
+test('createRouter / batch / results', async t => {
   const cluster = {
     geocode({q}) {
       if (q === 'foo1') {
@@ -22,7 +22,7 @@ test('routes / batch / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -55,7 +55,7 @@ test('routes / batch / results', async t => {
   })
 })
 
-test('routes / batch / no result', async t => {
+test('createRouter / batch / no result', async t => {
   const cluster = {
     reverse() {
       return []
@@ -63,7 +63,7 @@ test('routes / batch / no result', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -78,7 +78,7 @@ test('routes / batch / no result', async t => {
   })
 })
 
-test('routes / batch / wrong operation', async t => {
+test('createRouter / batch / wrong operation', async t => {
   const cluster = {
     wrong() {
       return []
@@ -86,7 +86,7 @@ test('routes / batch / wrong operation', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -102,7 +102,7 @@ test('routes / batch / wrong operation', async t => {
   })
 })
 
-test('routes / batch / no array', async t => {
+test('createRouter / batch / no array', async t => {
   const cluster = {
     geocode() {
       return []
@@ -110,7 +110,7 @@ test('routes / batch / no array', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: {id: 'request', operation: 'geocode', params: {q: 'foo1'}}
@@ -121,7 +121,7 @@ test('routes / batch / no array', async t => {
   t.is(body.message, 'requests is a required param (array)')
 })
 
-test('routes / batch / wrong operation in parameter', async t => {
+test('createRouter / batch / wrong operation in parameter', async t => {
   const cluster = {
     geocode() {
       return []
@@ -129,7 +129,7 @@ test('routes / batch / wrong operation in parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -142,7 +142,7 @@ test('routes / batch / wrong operation in parameter', async t => {
   t.is(body.message, 'operation must be one of geocode or reverse')
 })
 
-test('routes / batch / missing params', async t => {
+test('createRouter / batch / missing params', async t => {
   const cluster = {
     geocode() {
       return []
@@ -150,7 +150,7 @@ test('routes / batch / missing params', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body, status} = await request(app).post('/batch').send({
     requests: [
@@ -163,7 +163,7 @@ test('routes / batch / missing params', async t => {
   t.is(body.message, 'params is required for each requests item')
 })
 
-test('routes / batch / request contains more than 100 items', async t => {
+test('createRouter / batch / request contains more than 100 items', async t => {
   const cluster = {
     geocode() {
       return []
@@ -171,7 +171,7 @@ test('routes / batch / request contains more than 100 items', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const requests = Array.from({length: 101})
 
@@ -184,7 +184,7 @@ test('routes / batch / request contains more than 100 items', async t => {
   t.is(body.message, 'requests must not contains more than 100 items')
 })
 
-test('routes / batch / with multiple filter values as string', async t => {
+test('createRouter / batch / with multiple filter values as string', async t => {
   let capturedParams
 
   const cluster = {
@@ -197,7 +197,7 @@ test('routes / batch / with multiple filter values as string', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {status} = await request(app).post('/batch').send({
     requests: [
@@ -217,7 +217,7 @@ test('routes / batch / with multiple filter values as string', async t => {
   t.deepEqual(capturedParams.filters.citycode, ['59000', '59100'])
 })
 
-test('routes / batch / with multiple filter values as array', async t => {
+test('createRouter / batch / with multiple filter values as array', async t => {
   let capturedParams
 
   const cluster = {
@@ -230,7 +230,7 @@ test('routes / batch / with multiple filter values as array', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {status} = await request(app).post('/batch').send({
     requests: [
@@ -250,7 +250,7 @@ test('routes / batch / with multiple filter values as array', async t => {
   t.deepEqual(capturedParams.filters.citycode, ['59000', '59100'])
 })
 
-test('routes / batch / with global filters', async t => {
+test('createRouter / batch / with global filters', async t => {
   let capturedParams
 
   const cluster = {
@@ -263,7 +263,7 @@ test('routes / batch / with global filters', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {status} = await request(app).post('/batch').send({
     params: {

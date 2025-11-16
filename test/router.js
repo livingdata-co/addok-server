@@ -2,9 +2,9 @@ import test from 'ava'
 import request from 'supertest'
 import express from 'express'
 import createError from 'http-errors'
-import createRouter from '../lib/routes.js'
+import createRouter from '../lib/router.js'
 
-test('routes / search / results', async t => {
+test('createRouter / search / results', async t => {
   const cluster = {
     geocode() {
       return [{id: 'foo'}, {id: 'bar'}]
@@ -12,7 +12,7 @@ test('routes / search / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
@@ -27,7 +27,7 @@ test('routes / search / results', async t => {
   })
 })
 
-test('routes / search / no results', async t => {
+test('createRouter / search / no results', async t => {
   const cluster = {
     geocode() {
       return []
@@ -35,7 +35,7 @@ test('routes / search / no results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
@@ -47,7 +47,7 @@ test('routes / search / no results', async t => {
   })
 })
 
-test('routes / reverse / results', async t => {
+test('createRouter / reverse / results', async t => {
   const cluster = {
     reverse() {
       return [{id: 'foo'}]
@@ -55,7 +55,7 @@ test('routes / reverse / results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
@@ -69,7 +69,7 @@ test('routes / reverse / results', async t => {
   })
 })
 
-test('routes / reverse / no results', async t => {
+test('createRouter / reverse / no results', async t => {
   const cluster = {
     reverse() {
       return []
@@ -77,7 +77,7 @@ test('routes / reverse / no results', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
@@ -89,7 +89,7 @@ test('routes / reverse / no results', async t => {
   })
 })
 
-test('routes / search / invalid parameter', async t => {
+test('createRouter / search / invalid parameter', async t => {
   const cluster = {
     geocode() {
       throw createError(400, 'Invalid search parameter')
@@ -97,13 +97,13 @@ test('routes / search / invalid parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body} = await request(app).get('/search').expect(400)
   t.is(body.message, 'Invalid search parameter')
 })
 
-test('routes / reverse / invalid parameter', async t => {
+test('createRouter / reverse / invalid parameter', async t => {
   const cluster = {
     reverse() {
       throw createError(400, 'Invalid reverse parameter')
@@ -111,7 +111,7 @@ test('routes / reverse / invalid parameter', async t => {
   }
 
   const app = express()
-  app.use('/', createRouter(cluster))
+  app.use('/', createRouter({cluster}))
 
   const {body} = await request(app).get('/reverse').expect(400)
   t.is(body.message, 'Invalid reverse parameter')
