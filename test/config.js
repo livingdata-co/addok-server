@@ -1,8 +1,9 @@
 import {mkdirSync, writeFileSync, rmSync} from 'node:fs'
 import path from 'node:path'
 import {tmpdir} from 'node:os'
+import process from 'node:process'
 import test from 'ava'
-import {readJSON, validateConfig} from '../lib/config.js'
+import {readJSON, validateConfig, loadServerConfig} from '../lib/config.js'
 
 let testDir
 
@@ -176,4 +177,98 @@ test('validateConfig / handles empty filter definition', t => {
       citycode: {maxValues: 10}
     }
   })
+})
+
+// Tests for loadServerConfig
+test.serial('loadServerConfig / loads from ADDOK_SERVER_CONFIG_PATH', async t => {
+  const configPath = path.join(testDir, 'server-config.json')
+  const configData = {
+    filters: {
+      type: {maxValues: 1},
+      citycode: {maxValues: 100}
+    }
+  }
+  writeFileSync(configPath, JSON.stringify(configData))
+
+  const originalEnv = process.env.ADDOK_SERVER_CONFIG_PATH
+  process.env.ADDOK_SERVER_CONFIG_PATH = configPath
+
+  try {
+    const result = await loadServerConfig()
+    t.deepEqual(result, configData)
+  } finally {
+    process.env.ADDOK_SERVER_CONFIG_PATH = originalEnv
+  }
+})
+
+test.serial('loadServerConfig / returns default config when file not found', async t => {
+  const originalEnv = process.env.ADDOK_SERVER_CONFIG_PATH
+  process.env.ADDOK_SERVER_CONFIG_PATH = '/non/existent/path.json'
+
+  try {
+    const result = await loadServerConfig()
+    t.deepEqual(result, {filters: {}})
+  } finally {
+    process.env.ADDOK_SERVER_CONFIG_PATH = originalEnv
+  }
+})
+
+test.serial('loadServerConfig / throws on invalid JSON', async t => {
+  const configPath = path.join(testDir, 'invalid-server.json')
+  writeFileSync(configPath, '{invalid json}')
+
+  const originalEnv = process.env.ADDOK_SERVER_CONFIG_PATH
+  process.env.ADDOK_SERVER_CONFIG_PATH = configPath
+
+  try {
+    await t.throwsAsync(async () => loadServerConfig(), {
+      instanceOf: SyntaxError
+    })
+  } finally {
+    process.env.ADDOK_SERVER_CONFIG_PATH = originalEnv
+  }
+})
+
+test.serial('loadServerConfig / validates loaded config', async t => {
+  const configPath = path.join(testDir, 'invalid-values.json')
+  writeFileSync(configPath, JSON.stringify({
+    filters: {
+      type: {maxValues: -1}
+    }
+  }))
+
+  const originalEnv = process.env.ADDOK_SERVER_CONFIG_PATH
+  process.env.ADDOK_SERVER_CONFIG_PATH = configPath
+
+  try {
+    const error = await t.throwsAsync(async () => loadServerConfig(), {
+      instanceOf: Error
+    })
+    t.regex(error.message, /Configuration validation failed/)
+  } finally {
+    process.env.ADDOK_SERVER_CONFIG_PATH = originalEnv
+  }
+})
+
+test.serial('loadServerConfig / applies defaults to loaded config', async t => {
+  const configPath = path.join(testDir, 'partial-config.json')
+  writeFileSync(configPath, JSON.stringify({
+    filters: {
+      type: {}
+    }
+  }))
+
+  const originalEnv = process.env.ADDOK_SERVER_CONFIG_PATH
+  process.env.ADDOK_SERVER_CONFIG_PATH = configPath
+
+  try {
+    const result = await loadServerConfig()
+    t.deepEqual(result, {
+      filters: {
+        type: {maxValues: 1}
+      }
+    })
+  } finally {
+    process.env.ADDOK_SERVER_CONFIG_PATH = originalEnv
+  }
 })

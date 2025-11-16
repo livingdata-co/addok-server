@@ -9,8 +9,11 @@ import morgan from 'morgan'
 import {createCluster} from 'addok-cluster'
 
 import createRouter from './lib/router.js'
+import {loadServerConfig} from './lib/config.js'
 
 const PORT = process.env.PORT || 5000
+
+const config = await loadServerConfig()
 
 const app = express()
 
@@ -29,7 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
-app.use('/', createRouter({cluster}))
+app.use('/', createRouter({cluster, config}))
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Start listening on port ${PORT}`)
