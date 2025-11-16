@@ -1,0 +1,13 @@
+{
+  "filters": {
+    "citycode": {
+      "maxValues": 10
+    },
+    "postcode": {
+      "maxValues": 10
+    },
+    "type": {
+      "maxValues": 1
+    }
+  }
+}

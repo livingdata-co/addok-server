@@ -35,6 +35,7 @@ RUN chmod +x /app/init-data.sh /app/docker-entrypoint.sh
 ENV ADDOK_CONFIG_MODULE=/app/data/addok.conf
 ENV SQLITE_DB_PATH=/app/data/addok.db
 ENV ADDOK_REDIS_DATA_DIR=/app/data
+ENV ADDOK_SERVER_CONFIG_PATH=/app/data/addok-server.config.json
 
 ENV PATH=/root/.local/bin:$PATH
 

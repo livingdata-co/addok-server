@@ -24,7 +24,7 @@ You can add `ADDOK_DATA_URL` to your `.env` file to automatically download and e
 | --- | --- |
 | `ADDOK_CONFIG_MODULE` * | Path to addok configuration file |
 | `SQLITE_DB_PATH` | Path to addok SQLite database |
-| `ADDOK_FILTERS` | A list of fields to be indexed as available filters |
+| `ADDOK_SERVER_CONFIG_PATH` | Override path to addok-server JSON config file |
 | `ADDOK_CLUSTER_NUM_NODES` | Number of nodes to instantiate (default to number of CPUs) |
 | `ADDOK_REDIS_URL` | Connection string to addok Redis instance (can be an array) |
 | `ADDOK_REDIS_DATA_DIR` | Path to Redis data dir (in case you want `addok-server` handle its own `redis-server` instance) |
@@ -39,6 +39,31 @@ If you want to use the currently downloaded data :
 - `ADDOK_CONFIG_MODULE=data/addok.conf`
 - `SQLITE_DB_PATH=data/addok.db`
 - `ADDOK_REDIS_DATA_DIR=data/`
+
+## Server configuration file
+
+Create a JSON configuration file for addok-server (e.g., `addok-server.config.json`):
+
+```json
+{
+  "filters": {
+    "citycode": {
+      "maxValues": 5
+    },
+    "postcode": {
+      "maxValues": 5
+    },
+    "type": {
+      "maxValues": 3
+    }
+  }
+}
+```
+
+Each filter defines:
+- **maxValues**: Maximum number of values allowed per request for this filter (default: 1)
+
+Point to this file using the `ADDOK_SERVER_CONFIG_PATH` environment variable. Default path is `./addok-server.config.json`.
 
 ## Install dependencies and start node server
 
@@ -273,7 +298,7 @@ You can define the columns to be used via multiple columns parameters
 ### Using filters with CSV
 
 Filter parameters specify **column names** from the CSV file to use as filter values (not direct filter values).
-Available filters are defined by the `ADDOK_FILTERS` environment variable.
+Available filters are defined in the JSON configuration file.
 
 *example with filter columns:*
 ```bash
