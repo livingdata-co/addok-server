@@ -138,14 +138,12 @@ test('createFeatureCollection / operation geocode', t => {
   t.deepEqual(result, {
     type: 'FeatureCollection',
     features,
-    attribution: 'BAN',
-    licence: 'ETALAB-2.0',
     query: 'Lille',
     filters: undefined,
     center: undefined,
     limit: 2
   })
-  t.is(Object.keys(result).length, 8)
+  t.is(Object.keys(result).length, 6)
 })
 
 test('createFeatureCollection / operation reverse', t => {
@@ -156,12 +154,34 @@ test('createFeatureCollection / operation reverse', t => {
   t.deepEqual(result, {
     type: 'FeatureCollection',
     features,
-    attribution: 'BAN',
-    licence: 'ETALAB-2.0',
     query: 'Bordeaux',
     filters: undefined,
     center: undefined,
     limit: 1
+  })
+  t.is(Object.keys(result).length, 6)
+})
+
+test('createFeatureCollection / with attribution and license', t => {
+  const features = [{id: 'foo'}, {id: 'bar'}]
+  const params = {q: 'Lille', limit: 2, filters: {}}
+  const result = createFeatureCollection({
+    params,
+    operation: 'geocode',
+    results: features,
+    attribution: 'BAN',
+    license: 'ETALAB-2.0'
+  })
+
+  t.deepEqual(result, {
+    type: 'FeatureCollection',
+    features,
+    attribution: 'BAN',
+    license: 'ETALAB-2.0',
+    query: 'Lille',
+    filters: undefined,
+    center: undefined,
+    limit: 2
   })
   t.is(Object.keys(result).length, 8)
 })

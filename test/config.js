@@ -179,6 +179,30 @@ test('validateConfig / handles empty filter definition', t => {
   })
 })
 
+test('validateConfig / accepts attribution and license', t => {
+  const config = {
+    attribution: 'BAN',
+    license: 'ETALAB-2.0',
+    filters: {
+      type: {maxValues: 1}
+    }
+  }
+
+  const result = validateConfig(config)
+  t.deepEqual(result, config)
+})
+
+test('validateConfig / strips attribution and license if not strings', t => {
+  const config = {
+    attribution: 123,
+    license: true,
+    filters: {}
+  }
+
+  const error = t.throws(() => validateConfig(config), {instanceOf: Error})
+  t.regex(error.message, /Configuration validation failed/)
+})
+
 // Tests for loadServerConfig
 test.serial('loadServerConfig / loads from ADDOK_SERVER_CONFIG_PATH', async t => {
   const configPath = path.join(testDir, 'server-config.json')

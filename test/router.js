@@ -19,12 +19,10 @@ test('createRouter / search / results', async t => {
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
     type: 'FeatureCollection',
-    attribution: 'BAN',
     features: [
       {id: 'foo'},
       {id: 'bar'}
     ],
-    licence: 'ETALAB-2.0',
     limit: 5
   })
 })
@@ -42,9 +40,7 @@ test('createRouter / search / no results', async t => {
   const response = await request(app).get('/search').expect(200)
   t.deepEqual(response.body, {
     type: 'FeatureCollection',
-    attribution: 'BAN',
     features: [],
-    licence: 'ETALAB-2.0',
     limit: 5
   })
 })
@@ -62,11 +58,9 @@ test('createRouter / reverse / results', async t => {
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
     type: 'FeatureCollection',
-    attribution: 'BAN',
     features: [
       {id: 'foo'}
     ],
-    licence: 'ETALAB-2.0',
     limit: 1
   })
 })
@@ -84,10 +78,36 @@ test('createRouter / reverse / no results', async t => {
   const response = await request(app).get('/reverse').expect(200)
   t.deepEqual(response.body, {
     type: 'FeatureCollection',
-    attribution: 'BAN',
     features: [],
-    licence: 'ETALAB-2.0',
     limit: 1
+  })
+})
+
+test('createRouter / search / with attribution and license', async t => {
+  const cluster = {
+    geocode() {
+      return [{id: 'foo'}, {id: 'bar'}]
+    }
+  }
+
+  const app = express()
+  app.use('/', createRouter({
+    cluster,
+    filters: testConfig.filters,
+    attribution: 'BAN',
+    license: 'ETALAB-2.0'
+  }))
+
+  const response = await request(app).get('/search').expect(200)
+  t.deepEqual(response.body, {
+    type: 'FeatureCollection',
+    attribution: 'BAN',
+    license: 'ETALAB-2.0',
+    features: [
+      {id: 'foo'},
+      {id: 'bar'}
+    ],
+    limit: 5
   })
 })
 

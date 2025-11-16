@@ -46,6 +46,8 @@ Create a JSON configuration file for addok-server (e.g., `addok-server.config.js
 
 ```json
 {
+  "attribution": "BAN",
+  "license": "ETALAB-2.0",
   "filters": {
     "citycode": {
       "maxValues": 5
@@ -59,6 +61,11 @@ Create a JSON configuration file for addok-server (e.g., `addok-server.config.js
   }
 }
 ```
+
+Configuration options:
+- **attribution** (optional): Attribution text included in API responses (e.g., "BAN")
+- **license** (optional): License identifier included in API responses (e.g., "ETALAB-2.0")
+- **filters**: Define available filters and their constraints
 
 Each filter defines:
 - **maxValues**: Maximum number of values allowed per request for this filter (default: 1)

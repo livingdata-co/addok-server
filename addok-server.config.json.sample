@@ -1,4 +1,6 @@
 {
+  "attribution": "BAN",
+  "license": "ETALAB-2.0",
   "filters": {
     "citycode": {
       "maxValues": 10
