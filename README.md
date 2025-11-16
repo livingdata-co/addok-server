@@ -1,17 +1,16 @@
 # addok-server
 
-[![node-current](https://img.shields.io/badge/node-%3E%3D%2018.12-brightgreen)](https://img.shields.io/badge/node-%3E%3D%2018.12-brightgreen) [![Coverage Status](https://coveralls.io/repos/github/livingdata-co/addok-server/badge.svg)](https://coveralls.io/github/livingdata-co/addok-server)
+[![Coverage Status](https://coveralls.io/repos/github/livingdata-co/addok-server/badge.svg)](https://coveralls.io/github/livingdata-co/addok-server)
 
 A full-featured HTTP API for addok
 
 ## Prerequisites
 
-- Node.js 18 LTS and above
-- redis 7
+- Node.js 22 LTS or 24 LTS
+- redis 7.2 - 8.x
 - wget or curl
 - unzip
-- python 3.10
-- valid addok install (conform with addok.conf)
+- python 3.9 - 3.14
 
 ## Copy and edit env file
 
@@ -63,7 +62,7 @@ Set the `ADDOK_DATA_URL` environment variable to automatically download and extr
 
 ```bash
 docker run -p 5000:5000 \
-  -e ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip \
+  -e ADDOK_DATA_URL=https://addok.files.livingdata.co/ban/2025-11-16 \
   addok-server
 ```
 
@@ -71,8 +70,8 @@ Or using a local file mounted as a volume:
 
 ```bash
 docker run -p 5000:5000 \
-  -v /path/to/addok-france-bundle.zip:/app/archive.zip \
-  -e ADDOK_DATA_URL=/app/archive.zip \
+  -v /path/to/addok-bundle:/app/addok-bundle \
+  -e ADDOK_DATA_URL=/app/addok-bundle \
   addok-server
 ```
 
@@ -91,7 +90,7 @@ You can use the initialization script to automatically download and extract data
 **With environment variable:**
 
 ```bash
-export ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip
+export ADDOK_DATA_URL=https://addok.files.livingdata.co/ban/2025-11-16
 ./init-data.sh
 ```
 
@@ -99,7 +98,7 @@ export ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addo
 
 Add to your `.env` file:
 ```
-ADDOK_DATA_URL=https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip
+ADDOK_DATA_URL=https://addok.files.livingdata.co/ban/2025-11-16
 ```
 
 Then run:
@@ -110,7 +109,7 @@ Then run:
 **With a local file:**
 
 ```bash
-export ADDOK_DATA_URL=/path/to/addok-france-bundle.zip
+export ADDOK_DATA_URL=/path/to/addok-bundle
 ./init-data.sh
 ```
 
@@ -119,7 +118,7 @@ export ADDOK_DATA_URL=/path/to/addok-france-bundle.zip
 - Download
 
 ```bash
-wget https://adresse.data.gouv.fr/data/ban/adresses/latest/addok/addok-france-bundle.zip -O data.zip
+wget https://addok.files.livingdata.co/ban/2025-11-16 -O data.zip
 ```
 
 - Extract
@@ -222,7 +221,6 @@ You must send an array of requests that will be processed in parallel.
 #### Filter values in batch
 
 Filters can be specified:
-- As strings with `+` separator: `"citycode": "59000+59100"`
 - As arrays: `"citycode": ["59000", "59100"]`
 - In global `params` (applied to all requests)
 - In individual request `params` (merged with global params)
@@ -241,7 +239,9 @@ Filters can be specified:
 ```json
 {
   "params": {
-    "filters": {"type": "municipality+locality"}
+    "filters": {
+      "type": ["municipality", "locality"]
+    }
   },
   "requests": [
     {
@@ -249,7 +249,9 @@ Filters can be specified:
       "operation": "geocode",
       "params": {
         "q": "lille",
-        "filters": {"citycode": ["59000", "59100"]}
+        "filters": {
+          "citycode": ["59000", "59100"]
+        }
       }
     }
   ]
